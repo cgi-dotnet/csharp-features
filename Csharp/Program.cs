@@ -2,31 +2,34 @@
 
 namespace Csharp
 {
-    //public record Person(string FirstName, string LastName);
-    public record Person
+    public record Person(string FirstName, string LastName)
     {
-        public Person(string firstName, string lastName)
+        public string? MiddleName { get; init; }
+        public Person With(
+    string? firstName = null,
+    string? lastName = null,
+    string? middleName = null)
         {
-            FirstName = firstName;
-            LastName = lastName;
-        }
-
-        public string FirstName { get; init; }
-        public string LastName { get; init; }
-
-        public void Deconstruct(out string firstName, out string lastName)
-        {
-            firstName = FirstName;
-            lastName = LastName;
+            return new Person(
+                firstName != null ? firstName : this.FirstName,
+                lastName != null ? lastName : this.LastName)
+            {
+                MiddleName = middleName != null ? middleName : this.MiddleName
+            };
         }
     }
+
     class Program
     {
         static void Main(string[] args)
         {
             var person = new Person("John", "Doe");
-            (var firstName, var lastName) = person;
-            Console.WriteLine($"Hello World! {lastName}");
+            //Person modifiedPerson = person.With(middleName: "Patrick");
+            Person modifiedPerson = person with
+            {
+                MiddleName = "Patrick"
+            };
+            Console.WriteLine($"Hello World! {modifiedPerson.MiddleName}");
         }
     }
 }
