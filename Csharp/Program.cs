@@ -23,13 +23,15 @@ namespace Csharp
     {
         static void Main(string[] args)
         {
-            var person = new Person("John", "Doe");
-            //Person modifiedPerson = person.With(middleName: "Patrick");
-            Person modifiedPerson = person with
-            {
-                MiddleName = "Patrick"
-            };
-            Console.WriteLine($"Hello World! {modifiedPerson.MiddleName}");
+            var person1 = new Person("John", "Doe");
+            var person2 = new Person("John", "Doe");
+            var areEqual = person1.Equals(person2); // = false
+//In contrast to that, records implement value equality which means that two instances are treated
+//as equal if all of their properties are equal(that’s how structs behave):
+
+            var person1 = new Person("John", "Doe");
+            var person2 = new Person("John", "Doe");
+            var areEqual = person1.Equals(person2); // = true
         }
     }
 }
